@@ -1,0 +1,35 @@
+name: Upload Website
+on:
+  push:
+    branches:
+    - main
+env:
+  AWS_REGION: "eu-west-2"
+
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: eu-west-2
+        role-to-assume: arn:aws:iam::637423320599:role/github-publish-website
+        role-session-name: GH-Action-${ GITHUB_RUN_NUMBER }
+
+    - name: Configure runner
+      run: sudo apt update && sudo apt install unzip
+    - name: Extract site content
+      run: |
+        mkdir ./public/
+        unzip ./static-site-zip/simply-static.zip -d ./public/
+    - name: Deploy static site to S3 bucket
+      run: aws s3 sync ./public/ s3://d3ip-public-website-stage --delete
+    - name: Invalidate cloudfront cache
+      run: aws cloudfront create-invalidation --distribution-id E3AGJNKK8IUP4V --paths "/*"
