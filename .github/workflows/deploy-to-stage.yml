@@ -21,7 +21,7 @@ jobs:
       with:
         aws-region: eu-west-2
         role-to-assume: arn:aws:iam::637423320599:role/github-publish-website
-        role-session-name: GH-Action-${ GITHUB_RUN_NUMBER }
+        role-session-name: GH_Action_${ GITHUB_RUN_NUMBER }
 
     - name: Configure runner
       run: sudo apt update && sudo apt install unzip
