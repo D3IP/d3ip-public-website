@@ -1,5 +1,13 @@
 name: Promote to Prod
 on: workflow_dispatch
+
+env:
+  AWS_REGION: "eu-west-2"
+
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -7,11 +15,11 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-2
+        role-to-assume: arn:aws:iam::637423320599:role/github-publish-website
+        role-session-name: GH_Action_promote_to_prod
 
     - name: Deploy static site from test to prod S3
-      run: aws s3 sync s3://static-site-test-accepted-tortoise s3://d3ip-public-website-prod --delete
+      run: aws s3 sync s3://d3ip-public-website-stage s3://d3ip-public-website-prod --delete
     - name: Invalidate cloudfront cache
       run: aws cloudfront create-invalidation --distribution-id EFYUK8T9OZTEA --paths "/*"
