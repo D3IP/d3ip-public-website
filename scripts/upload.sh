@@ -26,6 +26,9 @@ cd ./static-site-zip/ || exit
 # Copy the file the name used by pipeline job
 cp "$1" "simply-static.zip"
 
+# Update local git repo
+git pull
+
 # Add the file to the git repo
 git add .
 
