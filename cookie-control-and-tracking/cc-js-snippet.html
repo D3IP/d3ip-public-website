@@ -3,7 +3,7 @@
   var _paq = window._paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
  // require user tracking and cookie consent before processing data / storing any cookies
-  _paq.push(['requireCookieConsent']);
+  _paq.push(['requireConsent']);
 // Primary tracking code
   _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
   _paq.push(["setCookieDomain", "*.d3ip.io"]);
@@ -31,8 +31,8 @@ var config = {
         "label": "Analytical Cookies",
         "description": "Analytical cookies help us to improve our website by collecting and reporting information on its usage.",
         "cookies": [],
-        "onAccept": "function () {_paq.push(['rememberCookieConsentGiven']);}",
-        "onRevoke": "function () {_paq.push(['forgetCookieConsentGiven']);}"
+        "onAccept": "function () {_paq.push(['rememberConsentGiven']);}",
+        "onRevoke": "function () {_paq.push(['forgetConsentGiven']);}"
     }],
     "iabCMP": false
 };
