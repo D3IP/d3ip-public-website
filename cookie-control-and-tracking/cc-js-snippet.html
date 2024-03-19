@@ -24,17 +24,20 @@
 <script src="https://tnv.d3ip.io/js/cookieControl-9.x.min.js" type="text/javascript"></script>
 <script>
 var config = {
-    "apiKey": "98b92c3013b1b01b7f8de7c165db09089411d3b1",
-    "product": "COMMUNITY",
-    "optionalCookies": [{
-        "name": "analytics",
-        "label": "Analytical Cookies",
-        "description": "Analytical cookies help us to improve our website by collecting and reporting information on its usage.",
-        "cookies": [],
-        "onAccept": "function () {_paq.push(['rememberConsentGiven']);}",
-        "onRevoke": "function () {_paq.push(['forgetConsentGiven']);}"
+    apiKey: '98b92c3013b1b01b7f8de7c165db09089411d3b1',
+    product: 'COMMUNITY',
+    optionalCookies: [{
+        name: "analytics",
+        label: "Analytical Cookies",
+        description: "Analytical cookies help us to improve our website by collecting and reporting information on its usage.",
+        cookies: [
+            '_pk_*',
+            'mtm_consent'
+        ],
+        onAccept: function() {_paq.push(['rememberConsentGiven']);},
+        onRevoke: function() {_paq.push(['forgetConsentGiven']);}
     }],
-    "iabCMP": false
+    iabCMP: false
 };
 
 CookieControl.load( config );
